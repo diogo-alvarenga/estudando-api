@@ -24,10 +24,13 @@ public class RecursoPostagem {
 	@RequestMapping(method=RequestMethod.POST)//a mesma coisa que @PostMapping("/postagem")
 	public ResponseEntity<Void> salvar(@RequestBody Postagem obj){
 		obj = servico.salvar(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
-		
-		return ResponseEntity.created(uri).build();
+		URI uri = 
+				ServletUriComponentsBuilder.fromCurrentRequest()//pega a url que chegou
+				.path("/{id}")//adiciona /{id} no final da url
+				.buildAndExpand(obj.getId())//pega o id do objeto e coloca no lugar de {id}
+				.toUri();//converte para uri
+												
+		return ResponseEntity.created(uri).build();//coloca status como created, coloca a uri no cabeçalho e retorna pra o client
 	}
 	
 }
