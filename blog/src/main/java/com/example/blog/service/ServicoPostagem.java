@@ -21,11 +21,10 @@ public class ServicoPostagem {
 	
 	public Postagem buscar(int id) {
 		Optional<Postagem> obj = repo.findById(id);
-		//retorna ou lança a exceção
-		return obj.orElseThrow(() -> new ObjetoNaoEncontrado("Objeto não encontrado! Id: "+id+ ", Tipo: "+Postagem.class.getName()));
+		return obj.orElse(null);
 	}
 	
-	public Postagem salvar(Postagem obj) {
+	public Postagem salvar(Postagem obj){
 		/*
 		 * o JPA verifica se o valor do id tem valor ou é
 		 * null. Se for null, ele faz um comando de
@@ -37,9 +36,19 @@ public class ServicoPostagem {
 		return repo.save(obj);
 	}
 	
-	public void deletar(int id) {
-		buscar(id);
-		repo.deleteById(id);
+	public String deletar(int id) {
+		try {
+			Postagem obj = buscar(id);
+			if(obj ==null) {
+				return "Postagem com id "+id+" não encontrada";
+			}else {
+			repo.deleteById(id);
+				return "Postagem deletada com sucesso";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "Exceção: "+e.getMessage();
+		}
 	}
 	
 	public Postagem editar(Postagem obj) {
@@ -47,11 +56,11 @@ public class ServicoPostagem {
 		 * que pode retornar o obj completo,
 		 * e assim ele cai dentro de newObj*/
 		Postagem newObj = buscar(obj.getId());
-		modfificar(newObj, obj);
+		modificar(newObj, obj);
 		return repo.save(newObj);	
 	}
 	
-	public void modfificar(Postagem newObj, Postagem obj) {
+	public void modificar(Postagem newObj, Postagem obj) {
 		newObj.setAutor(obj.getAutor());
 		newObj.setComentarios(obj.getComentarios());
 		newObj.setTexto(obj.getTexto());
