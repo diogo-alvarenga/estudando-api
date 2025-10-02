@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -47,7 +48,7 @@ import lombok.Setter;
 @Entity
 public class Postagem implements Serializable{
 
-	private static final Long serialVersionUID = 1L;
+	private static final Long serialVersionUID = 1L;//estudar
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,11 +56,13 @@ public class Postagem implements Serializable{
 	private String titulo;
 	private String texto;
 	
+	//chave estrangeira
 	@ManyToOne//relacionamento de muitos pra um
+	@JoinColumn(name = "autor_id", nullable = false)
 	private Autor autor;//objeto de conexão com a classe autor
 
-	@OneToMany(mappedBy = "postagem")//relacionamento um para muitos
-	private List<Comentario> comentarios = new ArrayList<Comentario>();
+	@OneToMany(mappedBy = "postagem", cascade = CascadeType.ALL)//relacionamento um para muitos
+	private List<Comentario> comentarios;
 
 	
 	
