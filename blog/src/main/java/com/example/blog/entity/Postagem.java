@@ -1,7 +1,6 @@
 package com.example.blog.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -42,9 +41,9 @@ import lombok.Setter;
  *(nome, email, etc.) são ignorados nessa comparação.
 
  */
-@EqualsAndHashCode(of="id")
-@Setter
 @Getter
+@Setter
+@EqualsAndHashCode(of="id")
 @Entity
 public class Postagem implements Serializable{
 

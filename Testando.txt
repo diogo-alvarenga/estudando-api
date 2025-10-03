@@ -1,0 +1,20 @@
+Ligue a aplicação na IDE
+
+
+http://localhost:8080/h2-console/
+Colocar em JDBC URL       jdbc:h2:mem:testdb
+
+Realizar testes
+insert into autor(nome, descricao)values('joao', 'teste descricao');
+select * from autor;
+
+insert into postagem(titulo,texto, autor_id) values('Harry potter',' A pedra filosofal',1);
+select * from postagem;
+select * from postagem where autor_id=1;
+
+insert into comentario(texto, autor_id, postagem_id)values('O filme foi bom',1,1);
+select * from comentario;
+
+
+Ver todas as postagens
+http://localhost:8080/postagem

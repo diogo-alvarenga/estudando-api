@@ -3,6 +3,10 @@ package com.example.blog.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,9 +33,10 @@ public class Autor implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nomee;
+	private String nome;
 	private String descricao;
 	
+    @JsonIgnoreProperties("autor") 
 	@OneToMany(mappedBy ="autor", cascade = CascadeType.ALL)
 	private List<Postagem> postagens;
 	
@@ -45,10 +50,10 @@ public class Autor implements Serializable{
 		this.id = id;
 	}
 	public String getNomee() {
-		return nomee;
+		return nome;
 	}
 	public void setNomee(String nomee) {
-		this.nomee = nomee;
+		this.nome = nomee;
 	}
 	public String getDescricao() {
 		return descricao;
